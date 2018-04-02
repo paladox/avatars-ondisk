@@ -22,6 +22,7 @@ import com.google.gerrit.extensions.restapi.Url;
 import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.avatar.AvatarProvider;
 import com.google.gerrit.server.config.CanonicalWebUrl;
+import com.google.gerrit.server.config.SitePaths;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -32,25 +33,24 @@ import java.nio.file.Path;
 @Singleton
 public class OnDiskAvatarProvider implements AvatarProvider {
   private String avatarUrl;
-  private Path pluginDir;
+  private SitePaths sitePaths;
 
   @Inject
-  OnDiskAvatarProvider(@PluginName String pluginName,
-      @CanonicalWebUrl @Nullable String canonicalUrl,
-      @PluginData Path pluginDir) {
-    this.avatarUrl = canonicalUrl + "/plugin/" + pluginName + "/data/";
-    this.pluginDir = pluginDir;
-    
+  OnDiskAvatarProvider(SitePaths sitePaths,
+      @CanonicalWebUrl @Nullable String canonicalUrl) {
+    this.avatarUrl = canonicalUrl + "/static/avatars/";
+    this.sitePaths = sitePaths;
   }
 
   @Override
   public String getUrl(IdentifiedUser forUser, int imageSize) {
     String fileName = forUser.getUserName() + ".png";
     Path localFile = pluginDir.resolve(fileName);
+    Path localFile = sitePaths.static_dir.resolve("avatars/" + fileName);
     if(Files.isReadable(localFile) && Files.isRegularFile(localFile)) {
       return avatarUrl + Url.encode(fileName);
     } else {
-      return null;
+      return avatarUrl + Url.encode("default.png");
     }
   }
 
