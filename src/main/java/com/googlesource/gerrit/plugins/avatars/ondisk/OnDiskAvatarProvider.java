@@ -45,7 +45,6 @@ public class OnDiskAvatarProvider implements AvatarProvider {
   @Override
   public String getUrl(IdentifiedUser forUser, int imageSize) {
     String fileName = forUser.getUserName() + ".png";
-    Path localFile = pluginDir.resolve(fileName);
     Path localFile = sitePaths.static_dir.resolve("avatars/" + fileName);
     if(Files.isReadable(localFile) && Files.isRegularFile(localFile)) {
       return avatarUrl + Url.encode(fileName);
