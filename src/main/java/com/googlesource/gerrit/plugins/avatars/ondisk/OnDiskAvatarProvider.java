@@ -17,7 +17,6 @@ package com.googlesource.gerrit.plugins.avatars.ondisk;
 import com.google.gerrit.common.Nullable;
 import com.google.gerrit.extensions.annotations.Listen;
 import com.google.gerrit.extensions.annotations.PluginName;
-import com.google.gerrit.extensions.annotations.PluginData;
 import com.google.gerrit.extensions.restapi.Url;
 import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.avatar.AvatarProvider;
