@@ -1,1 +1,1 @@
-This plugin loads avatars from the plugin's data directory.
+This plugin loads avatars from static/avatars/.
